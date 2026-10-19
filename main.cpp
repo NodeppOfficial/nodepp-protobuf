@@ -1,16 +1,30 @@
 #include <nodepp/nodepp.h>
+#include <nodepp/json.h>
 #include <protobuf/protobuf.h>
 
 using namespace nodepp;
 
 void onMain() {
 
+    /* Build a protobuf message
+    protobuf_t msg ({
+        uchar_16(42),
+        string_t("hola"),
+        uchar_32(12345) ,
+        uchar_64(12345) ,
+        float   (10.3f) ,
+        double  (550.0)
+    });
+    */
+
     // Build a protobuf message
     protobuf_t msg;
-    msg.push( uchar_16(42)     );  // field 0: varint
-    msg.push( string_t("hola") );  // field 1: length-delimited
-    msg.push( uchar_32(12345)  );  // field 2: 32-bit
-    msg.push( uchar_64(12345)  );  // field 3: 64-bit
+    msg.push( uchar_16(3000)  );  // field 0: varint
+    msg.push( string_t("hola"));  // field 1: length-delimited
+    msg.push( uchar_32(12345) );  // field 2: 32-bit
+    msg.push( uchar_64(12345) );  // field 3: 64-bit
+    msg.push( float   (10.3f) );  // field 4: float  32-bit
+    msg.push( double  (550.0) );  // field 5: double 64-bit
 
     // Serialize
     auto data = protobuf::format( msg );
@@ -21,6 +35,11 @@ void onMain() {
     console::log( "field 0:", parsed[0].as<uchar_16>() );
     console::log( "field 1:", parsed[1].as<string_t>() );
     console::log( "field 2:", parsed[2].as<uchar_32>() );
-    console::log( "field 4:", parsed[3].as<uchar_64>() );
+    console::log( "field 3:", parsed[3].as<uchar_64>() );
+    console::log( "field 4:", parsed[4].as<float>   () );
+    console::log( "field 5:", parsed[5].as<double>  () );
+
+    // stringify
+    console::log( "json:", json::stringify( parsed ) );
 
 }

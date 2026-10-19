@@ -14,11 +14,21 @@ Built on Nodepp's `ptr_t`, `any_t`, and `array_t`. Zero-copy. Thread-safe. 2KB.
 
 ```cpp
 #include <nodepp/nodepp.h>
+#include <nodepp/json.h>
 #include <protobuf/protobuf.h>
 
 using namespace nodepp;
 
 void onMain() {
+
+    /* Build a protobuf message
+    protobuf_t msg ({
+        uchar_16(42),
+        string_t("hola"),
+        uchar_32(12345) ,
+        uchar_64(12345)
+    });
+    */
 
     // Build a protobuf message
     protobuf_t msg;
@@ -36,8 +46,10 @@ void onMain() {
     console::log( "field 0:", parsed[0].as<uchar_16>() );
     console::log( "field 1:", parsed[1].as<string_t>() );
     console::log( "field 2:", parsed[2].as<uchar_32>() );
-    console::log( "field 4:", parsed[3].as<uchar_64>() );
+    console::log( "field 3:", parsed[3].as<uchar_64>() );
+
+    // stringify
+    console::log( json::stringify( parsed ) );
 
 }
-
 ```
